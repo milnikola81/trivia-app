@@ -8,17 +8,22 @@ export default new Vuex.Store({
   state: {
     joke: {}
   },
-  mutations: {
-    setJoke(state) {
-      ChuckService.getRandomJoke().then(function (response) {
-        console.log(response.data)
-        //state.joke = response.data
-      }).catch(function (err) {
-        //console.log('error in promise')
-      });  
+  mutations:{
+    setJoke(state,joke){
+        state.joke = joke
     }
   },
-  actions: {
-
+  actions:{
+      fetchRandomJoke(context){
+          ChuckService.getRandomJoke().then((joke)=>{
+              context.commit('setJoke', joke)
+          })
+      }
+  },
+  getters:{
+      getJoke(state){
+          return state.joke
+      }
   }
 })
+

@@ -11,6 +11,11 @@ import Chuck from '../components/Chuck.vue'
 export default {
     components: {
         Chuck
+    },
+    data() {
+        return {
+
+        }
     }
 }
 </script>
