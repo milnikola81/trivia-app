@@ -15,7 +15,7 @@
 
         <br><br>
 
-        <h1>Trivia</h1>
+        <!-- <h1>Trivia</h1>
 
         <br>
 
@@ -38,7 +38,7 @@
         <div v-if="trivias" v-for="(trivia, index) in trivias" :key="index" style="text-align: left">
             <p class="question" style="color: red" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
             <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
-        </div>
+        </div> -->
 
 
     </div>
@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             selectedCategory: '',
-            selectedTriviaCategory: ''
+            // selectedTriviaCategory: ''
         }
     },
     methods: {
@@ -62,20 +62,25 @@ export default {
         getJokeCategories() {
             this.$store.dispatch('fetchJokeCategories')
         },
-        getRandomTrivia() {
-            this.$store.dispatch('fetchRandomTrivia')
-        },
-        showAnswer(trivia) {
-            let index = this.trivias.indexOf(trivia)
-            this.trivias[index].answerShown = !this.trivias[index].answerShown
-        },
-        getTriviaCategories() {
-            this.$store.dispatch('fetchTriviaCategories')
-        },
-        getCategorizedTrivia(selectedTriviaCategory) {
-            var id = selectedTriviaCategory.triviaCategory.id
-            this.$store.dispatch('fetchCategorizedTrivia', id)
-        }
+        // getRandomTrivia() {
+        //     this.$store.dispatch('fetchRandomTrivia')
+        // },
+        // showAnswer(trivia) {
+        //     let index = this.trivias.indexOf(trivia)
+        //     this.trivias[index].answerShown = !this.trivias[index].answerShown
+        // },
+        // getTriviaCategories() {
+        //     this.$store.dispatch('fetchTriviaCategories')
+        // },
+        // getCategorizedTrivia(selectedTriviaCategory) {
+        //     if(selectedTriviaCategory.triviaCategory) {
+        //         var id = selectedTriviaCategory.triviaCategory.id
+        //         this.$store.dispatch('fetchCategorizedTrivia', id)
+        //     }
+        //     else {
+        //         this.getRandomTrivia()
+        //     }
+        // }
     },
     computed: {
         joke: function() {
@@ -84,18 +89,18 @@ export default {
         categories: function() {
             return this.$store.state.categories
         },
-        trivias: function() {
-            return this.$store.state.trivia
-        },
-        triviaCategories: function() {
-            return this.$store.state.triviaCategories
-        },
+        // trivias: function() {
+        //     return this.$store.state.trivia
+        // },
+        // triviaCategories: function() {
+        //     return this.$store.state.triviaCategories
+        // },
     },
     created() {
         this.getNewJoke()
         this.getJokeCategories()
-        this.getRandomTrivia()
-        this.getTriviaCategories()
+        // this.getRandomTrivia()
+        // this.getTriviaCategories()
     },
     beforeRouteEnter(to, from, next) {
         // nacin 1

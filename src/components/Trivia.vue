@@ -1,12 +1,83 @@
 <template>
     <div>
-        <h1>Trivia component</h1>
+        <h1>Trivia</h1>
+        <br>
+
+        <form @submit.prevent>
+            <div class="form-group">
+                <label for="triviaCategorySelect">Trivia Category Select</label>
+                <select class="form-control" id="triviaCategorySelect" options="triviaCategories" v-model="selectedTriviaCategory">
+                    <option v-for="(triviaCategory, index) in triviaCategories" :key="index" v-bind:value="{ triviaCategory }">{{triviaCategory.title}}</option>
+                </select>
+            </div>
+            <button @click="getCategorizedTrivia(selectedTriviaCategory)">Get new trivia</button>
+        </form>
+
+        <br><br>
+
+        <h5>Click on question to find out the answer</h5>
+
+        <br><br>
+
+        <div v-if="trivias" v-for="(trivia, index) in trivias" :key="index" style="text-align: left">
+            <p class="question" style="color: red" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
+            <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
+        </div>
     </div>
 </template>
 
 <script>
+import { store } from './../store'
+
 export default {
-    
+    data() {
+        return {
+            selectedTriviaCategory: ''
+        }
+    },
+    methods: {
+        getRandomTrivia() {
+            this.$store.dispatch('fetchRandomTrivia')
+        },
+        showAnswer(trivia) {
+            let index = this.trivias.indexOf(trivia)
+            this.trivias[index].answerShown = !this.trivias[index].answerShown
+        },
+        getTriviaCategories() {
+            this.$store.dispatch('fetchTriviaCategories')
+        },
+        getCategorizedTrivia(selectedTriviaCategory) {
+            if(selectedTriviaCategory.triviaCategory) {
+                var id = selectedTriviaCategory.triviaCategory.id
+                this.$store.dispatch('fetchCategorizedTrivia', id)
+            }
+            else {
+                this.getRandomTrivia()
+            }
+        }
+    },
+    computed: {
+        trivias: function() {
+            return this.$store.state.trivia
+        },
+        triviaCategories: function() {
+            return this.$store.state.triviaCategories
+        },
+    },
+    created() {
+        this.getRandomTrivia()
+        this.getTriviaCategories()
+    },
 }
 </script>
+
+<style scoped>
+    form {
+        max-width: 30%;
+        margin: 0 auto;
+    }
+    .question:hover {
+        cursor: pointer;
+    }
+</style>
 

@@ -11,7 +11,7 @@ export default new Vuex.Store({
     categories: [],
     trivia: [],
     triviaCategories: [],
-    categorizedTrivia: []
+    // categorizedTrivia: []
   },
   mutations:{
     setJoke(state, joke){
