@@ -36,7 +36,10 @@ export default new Vuex.Store({
       fetchRandomTrivia(context) {
         trivia.getAll().then((response) => {
             var trivias = response.data
-            // console.log(trivias)
+            for (var i = 0; i < trivias.length; i++) {
+                trivias[i].answerShown = false
+                trivias[i].index = i + 1
+            }
             context.commit('setTrivia', trivias)
         })
       }
