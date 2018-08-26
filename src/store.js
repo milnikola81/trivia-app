@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import ChuckService from './services/ChuckService'
+import { trivia } from './services/TriviaService'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     joke: {},
-    categories: []
+    categories: [],
+    trivia: []
   },
   mutations:{
     setJoke(state, joke){
@@ -15,6 +17,9 @@ export default new Vuex.Store({
     },
     setCategories(state, categories) {
         state.categories = categories
+    },
+    setTrivia(state, trivia) {
+        state.trivia = trivia
     }
   },
   actions:{
@@ -26,6 +31,13 @@ export default new Vuex.Store({
       fetchJokeCategories(context) {
         ChuckService.getJokeCategories().then((response) => {
             context.commit('setCategories', response)
+        })
+      },
+      fetchRandomTrivia(context) {
+        trivia.getAll().then((response) => {
+            var trivias = response.data
+            // console.log(trivias)
+            context.commit('setTrivia', trivias)
         })
       }
   },

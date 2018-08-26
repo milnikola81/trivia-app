@@ -2,6 +2,8 @@
     <div>
         <h3>Chuck component</h3>
         <p>{{joke}}</p>
+        <p style="color: red">Random question:</p>
+        <p>{{question}}</p>
         
         <form @submit.prevent>
             <div class="form-group">
@@ -32,6 +34,9 @@ export default {
         },
         getJokeCategories() {
             this.$store.dispatch('fetchJokeCategories')
+        },
+        getRandomTrivia() {
+            this.$store.dispatch('fetchRandomTrivia')
         }
     },
     computed: {
@@ -40,11 +45,15 @@ export default {
         },
         categories: function() {
             return this.$store.state.categories
+        },
+        question: function() {
+            return this.$store.state.trivia[3].question
         }
     },
     created() {
         this.getNewJoke()
         this.getJokeCategories()
+        this.getRandomTrivia()
     },
     beforeRouteEnter(to, from, next) {
         // nacin 1
