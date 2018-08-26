@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <h1>Trivia</h1>
+    <div class="content">
+        <br>
+        <h3>Trivia</h3>
         <br>
 
         <form @submit.prevent>
@@ -10,7 +11,9 @@
                     <option v-for="(triviaCategory, index) in triviaCategories" :key="index" v-bind:value="{ triviaCategory }">{{triviaCategory.title}}</option>
                 </select>
             </div>
-            <button @click="getCategorizedTrivia(selectedTriviaCategory)">Get new trivia</button>
+            <button type="button" class="btn btn-success" 
+                @click="getCategorizedTrivia(selectedTriviaCategory)">Get new trivia
+            </button>
         </form>
 
         <br><br>
@@ -20,7 +23,7 @@
         <br><br>
 
         <div v-if="trivias" v-for="(trivia, index) in trivias" :key="index" style="text-align: left">
-            <p class="question" style="color: red" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
+            <p class="question" style="color: #404040" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
             <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
         </div>
     </div>

@@ -1,19 +1,20 @@
 <template>
     <div>
-        <h1>TRIVIA APP</h1>
+        <br>
+        <h2>Trivia App</h2>
         <br><br><br>
-        <h3>Please select between options in navbar</h3>
+        <h3>^ ^ ^ Please select between options in navbar ^ ^ ^</h3>
         <!-- <Chuck /> -->
     </div>
 </template>
 
 <script>
-import Chuck from './Chuck.vue'
+// import Chuck from './Chuck.vue'
 
 export default {
-    components: {
-        Chuck
-    },
+    // components: {
+    //     Chuck
+    // },
     data() {
         return {
 
