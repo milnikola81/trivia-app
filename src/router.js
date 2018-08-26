@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import TriviaApp from './components/TriviaApp.vue'
 import Chuck from './components/Chuck.vue'
+import Trivia from './components/Trivia.vue'
 
 
 Vue.use(Router)
@@ -10,13 +11,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'trivia',
       component: TriviaApp
     },
     {
       path: '/chuck',
-      name: 'chuck',
       component: Chuck
+    },
+    {
+      path: '/trivia',
+      component: Trivia
     },
 
     // {

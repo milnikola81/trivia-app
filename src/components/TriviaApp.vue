@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>trivia app</h1>
+        <h1>TRIVIA APP</h1>
         <Chuck />
     </div>
 </template>

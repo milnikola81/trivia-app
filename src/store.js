@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     joke: {},
     categories: [],
-    trivia: []
+    trivia: [],
+    triviaCategories: [],
+    categorizedTrivia: []
   },
   mutations:{
     setJoke(state, joke){
@@ -19,7 +21,14 @@ export default new Vuex.Store({
         state.categories = categories
     },
     setTrivia(state, trivia) {
+        for (var i = 0; i < trivia.length; i++) {
+            trivia[i].answerShown = false
+            trivia[i].index = i + 1
+        }
         state.trivia = trivia
+    },
+    setTriviaCategories(state, triviaCategories) {
+        state.triviaCategories = triviaCategories
     }
   },
   actions:{
@@ -35,12 +44,22 @@ export default new Vuex.Store({
       },
       fetchRandomTrivia(context) {
         trivia.getAll().then((response) => {
+            context.commit('setTrivia', response.data)
+        })
+      },
+      fetchTriviaCategories(context) {
+        trivia.getCategories().then((response) => {
+            context.commit('setTriviaCategories', response.data)
+        })
+      },
+      fetchCategorizedTrivia(context, category_id) {
+        trivia.getCategorizedTrivia(category_id).then((response) => {
             var trivias = response.data
             for (var i = 0; i < trivias.length; i++) {
                 trivias[i].answerShown = false
                 trivias[i].index = i + 1
             }
-            context.commit('setTrivia', trivias)
+            context.commit('setTrivia', response.data)
         })
       }
   },

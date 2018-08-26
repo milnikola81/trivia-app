@@ -5,8 +5,8 @@
                 
         <form @submit.prevent>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control" id="exampleFormControlSelect1" v-model="selectedCategory">
+                <label for="jokeCategorySelect">Joke Category Select</label>
+                <select class="form-control" id="jokeCategorySelect" v-model="selectedCategory">
                     <option v-for="(category, index) in categories" :key="index">{{category}}</option>
                 </select>
             </div>
@@ -19,8 +19,24 @@
 
         <br>
 
+        <form @submit.prevent>
+            <div class="form-group">
+                <label for="triviaCategorySelect">Trivia Category Select</label>
+                <select class="form-control" id="triviaCategorySelect" options="triviaCategories" v-model="selectedTriviaCategory">
+                    <option v-for="(triviaCategory, index) in triviaCategories" :key="index" v-bind:value="{ triviaCategory }">{{triviaCategory.title}}</option>
+                </select>
+            </div>
+            <button @click="getCategorizedTrivia(selectedTriviaCategory)">Get new trivia</button>
+        </form>
+
+        <br><br>
+
+        <h5>Click on question to find out the answer</h5>
+
+        <br><br>
+
         <div v-if="trivias" v-for="(trivia, index) in trivias" :key="index" style="text-align: left">
-            <p style="color: red" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
+            <p class="question" style="color: red" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
             <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
         </div>
 
@@ -36,12 +52,12 @@ export default {
     data() {
         return {
             selectedCategory: '',
+            selectedTriviaCategory: ''
         }
     },
     methods: {
         getNewJoke(selectedCategory) {
             this.$store.dispatch('fetchRandomJoke', selectedCategory)
-            this.getRandomTrivia()
         },
         getJokeCategories() {
             this.$store.dispatch('fetchJokeCategories')
@@ -52,6 +68,13 @@ export default {
         showAnswer(trivia) {
             let index = this.trivias.indexOf(trivia)
             this.trivias[index].answerShown = !this.trivias[index].answerShown
+        },
+        getTriviaCategories() {
+            this.$store.dispatch('fetchTriviaCategories')
+        },
+        getCategorizedTrivia(selectedTriviaCategory) {
+            var id = selectedTriviaCategory.triviaCategory.id
+            this.$store.dispatch('fetchCategorizedTrivia', id)
         }
     },
     computed: {
@@ -63,12 +86,16 @@ export default {
         },
         trivias: function() {
             return this.$store.state.trivia
-        }
+        },
+        triviaCategories: function() {
+            return this.$store.state.triviaCategories
+        },
     },
     created() {
         this.getNewJoke()
         this.getJokeCategories()
-        // this.getRandomTrivia()
+        this.getRandomTrivia()
+        this.getTriviaCategories()
     },
     beforeRouteEnter(to, from, next) {
         // nacin 1
@@ -93,6 +120,9 @@ export default {
 form {
     max-width: 30%;
     margin: 0 auto;
+}
+.question:hover {
+    cursor: pointer;
 }
 </style>
 
