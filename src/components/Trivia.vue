@@ -27,13 +27,11 @@
             <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
         </div>
 
-        <!-- <p v-if="filteredTrivias" v-for="(trivia, index) in trivias" :key="index">{{trivia.answer}}</p> -->
-
     </div>
 </template>
 
 <script>
-import { store } from './../store'
+import store from './../store'
 
 export default {
     data() {
@@ -77,6 +75,12 @@ export default {
         this.getRandomTrivia()
         this.getTriviaCategories()
     },
+    beforeRouteEnter (to, from, next) {
+        store.dispatch('fetchRandomTrivia')
+        .then(() => {
+            next();
+        });
+    }
 }
 </script>
 

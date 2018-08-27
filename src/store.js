@@ -37,20 +37,20 @@ export default new Vuex.Store({
     }
   },
   actions:{
-      fetchRandomJoke(context, category){
-          ChuckService.getRandomJoke(category).then((joke)=>{
-              context.commit('setJoke', joke)
-          })
+      async fetchRandomJoke(context, category) {
+          let resolve = await ChuckService.getRandomJoke(category)
+          context.commit('setJoke', resolve)
+          return resolve
       },
       fetchJokeCategories(context) {
         ChuckService.getJokeCategories().then((response) => {
             context.commit('setCategories', response)
         })
       },
-      fetchRandomTrivia(context) {
-        trivia.getAll().then((response) => {
-            context.commit('setTrivia', response.data)
-        })
+      async fetchRandomTrivia(context) {
+        let resolve = await trivia.getAll()
+        context.commit('setTrivia', resolve.data)
+        return resolve.data
       },
       fetchTriviaCategories(context) {
         trivia.getCategories().then((response) => {
@@ -77,4 +77,3 @@ export default new Vuex.Store({
       }
   }
 })
-

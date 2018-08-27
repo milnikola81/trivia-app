@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { store } from './../store'
+import store from './../store'
 
 export default {
     data() {
@@ -49,8 +49,14 @@ export default {
         }
     },
     created() {
-        this.getNewJoke()
+        // this.getNewJoke()
         this.getJokeCategories()
+    },
+    beforeRouteEnter (to, from, next) {
+        store.dispatch('fetchRandomJoke')
+        .then(() => {
+            next();
+        });
     }
 }
 </script>
