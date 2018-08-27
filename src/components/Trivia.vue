@@ -72,7 +72,7 @@ export default {
         }
     },
     created() {
-        this.getRandomTrivia()
+        // this.getRandomTrivia()
         this.getTriviaCategories()
     },
     beforeRouteEnter (to, from, next) {
