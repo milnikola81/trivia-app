@@ -11,7 +11,7 @@ export default new Vuex.Store({
     categories: [],
     trivia: [],
     triviaCategories: [],
-    // categorizedTrivia: []
+    filteredTrivias: []
   },
   mutations:{
     setJoke(state, joke){
@@ -26,9 +26,14 @@ export default new Vuex.Store({
             trivia[i].index = i + 1
         }
         state.trivia = trivia
+        state.filteredTrivias = trivia
     },
     setTriviaCategories(state, triviaCategories) {
         state.triviaCategories = triviaCategories
+    },
+    setFilteredTrivia(state, value) {
+        state.filteredTrivias = state.trivia.filter(trivia => 
+        trivia.question.toLowerCase().match(value))
     }
   },
   actions:{

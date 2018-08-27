@@ -22,10 +22,13 @@
 
         <br><br>
 
-        <div v-if="trivias" v-for="(trivia, index) in trivias" :key="index" style="text-align: left">
+        <div v-if="filteredTrivias" v-for="(trivia, index) in filteredTrivias" :key="index" style="text-align: left">
             <p class="question" style="color: #404040" @click="showAnswer(trivia)">{{trivia.index}}. {{trivia.question}}</p>
             <p v-if="trivia.answerShown" style="color: green">Answer: {{trivia.answer}}</p>
         </div>
+
+        <!-- <p v-if="filteredTrivias" v-for="(trivia, index) in trivias" :key="index">{{trivia.answer}}</p> -->
+
     </div>
 </template>
 
@@ -66,6 +69,9 @@ export default {
         triviaCategories: function() {
             return this.$store.state.triviaCategories
         },
+        filteredTrivias: function() {
+            return this.$store.state.filteredTrivias
+        }
     },
     created() {
         this.getRandomTrivia()
